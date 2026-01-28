@@ -6,29 +6,47 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Test route
+app.get("/", (req, res) => {
+  res.send("Hotel Pixi backend running ");
+});
+
+// ROOM BOOKING (UPDATED: age & gender added)
 app.post("/book", (req, res) => {
+  const booking = req.body;
+
   const data = JSON.parse(fs.readFileSync("bookings.json"));
-  data.push(req.body);
+  data.push({
+    name: booking.name,
+    email: booking.email,
+    age: booking.age,
+    gender: booking.gender,
+    room: booking.room,
+    date: booking.date,
+    price: booking.price
+  });
+
   fs.writeFileSync("bookings.json", JSON.stringify(data, null, 2));
-  res.json({ message: "Room booked" });
+  res.json({ message: "Room booking confirmed ✅" });
 });
 
+// FOOD ORDER
 app.post("/order", (req, res) => {
+  const order = req.body;
   const data = JSON.parse(fs.readFileSync("orders.json"));
-  data.push(req.body);
+  data.push(order);
   fs.writeFileSync("orders.json", JSON.stringify(data, null, 2));
-  res.json({ message: "Food ordered" });
+  res.json({ message: "Food order placed 🍽️" });
 });
 
+// PAYMENT
 app.post("/pay", (req, res) => {
-  let data = [];
-  if (fs.existsSync("payments.json")) {
-    data = JSON.parse(fs.readFileSync("payments.json"));
-  }
-  data.push(req.body);
+  const payment = req.body;
+  const data = JSON.parse(fs.readFileSync("payments.json"));
+  data.push(payment);
   fs.writeFileSync("payments.json", JSON.stringify(data, null, 2));
-  res.json({ message: "Payment done" });
+  res.json({ message: "Payment successful 💳" });
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log("Server running"));
+app.listen(PORT, () => console.log("Server running on port " + PORT));
