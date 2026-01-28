@@ -61,5 +61,12 @@
     "room": "Deluxe",
     "date": "2026-01-31",
     "status": "Confirmed"
+  },
+  {
+    "name": "Pratham.S",
+    "email": "prathams.galaxies@gmail.com",
+    "room": "Single",
+    "date": "2026-01-31",
+    "status": "Confirmed"
   }
 ]
